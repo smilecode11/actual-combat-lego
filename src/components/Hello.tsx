@@ -4,9 +4,11 @@ export default defineComponent({
   setup(props: any) {
 
     const render = () => {
-      return <>
-        <div>{props.msg}</div>
-      </>
+      return (
+        <>
+          <div>{props.msg}</div>
+        </>
+      )
     }
     return render
   }

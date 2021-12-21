@@ -1,11 +1,17 @@
 <template>
 	<h1>慕课乐高标准模版</h1>
+	<divider orientation="left">tsx component test</divider>
 	<hello :msg="helloMessage"></hello>
+	<divider orientation="left">antd-vue test</divider>
+	<antd-vue></antd-vue>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { Divider } from "ant-design-vue";
+
 import Hello from "./components/Hello";
+import AntdVue from "./components/AntdVue";
 
 export default defineComponent({
 	name: "App",
@@ -17,7 +23,9 @@ export default defineComponent({
 		};
 	},
 	components: {
-		Hello
+		Hello,
+		AntdVue,
+		Divider
 	}
 });
 </script>
