@@ -7,7 +7,7 @@
 				<a-col :span="8">{{ helloMessage }}</a-col>
 			</a-row>
 		</a-layout-header>
-		<a-layout-content>
+		<a-layout-content class="layout-content-container">
 			<router-view />
 		</a-layout-content>
 		<a-layout-footer>
@@ -45,7 +45,8 @@ export default defineComponent({
 }
 
 .ant-layout-content {
-	padding: 18px 50px;
+	/* padding: 18px 50px; */
+	background: #fff;
 }
 .ant-layout-footer {
 	color: antiquewhite;
