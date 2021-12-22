@@ -2,9 +2,26 @@
 	<a-layout>
 		<a-layout-header>
 			<a-row :gutter="16">
-				<a-col :span="8">尘心@《仿慕课乐高》</a-col>
-				<a-col :span="8"></a-col>
-				<a-col :span="8">{{ helloMessage }}</a-col>
+				<a-col :span="8">
+					<h2 @click="handleRouterGoHome" class="logo-wrapper">
+						尘心@《仿慕课乐高》
+					</h2>
+				</a-col>
+				<a-col :span="12"></a-col>
+				<a-col :span="4">
+					<a-dropdown-button v-if="false">
+						{{ userName }}
+						<template #overlay>
+							<a-menu @click="handleMenuClick">
+								<a-menu-item key="usercenter"> 个人中心 </a-menu-item>
+								<a-menu-item key="logout"> 登出 </a-menu-item>
+							</a-menu>
+						</template>
+					</a-dropdown-button>
+					<a-button @click="handleRouterGoLogin" type="primary" v-else
+						>登录</a-button
+					>
+				</a-col>
 			</a-row>
 		</a-layout-header>
 		<a-layout-content class="layout-content-container">
@@ -21,14 +38,40 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
 	name: "App",
 	setup() {
-		const helloMessage = "hello, Chenxin";
+		const router = useRouter();
+
+		//#region logo 相关
+		const handleRouterGoHome = () => {
+			router.push("/");
+		};
+		//#endregion logo 相关
+
+		//#region 用户操作相关
+		const userName = "Chen xin";
+		const handleMenuClick = (data: any) => {
+			const { key } = data;
+			if (key === "usercenter") {
+				console.log("个人中心");
+			} else if (key === "logout") {
+				console.log("登出");
+			}
+		};
+		//  登录页面跳转
+		const handleRouterGoLogin = () => {
+			router.push(`/login`);
+		};
+		//#endregion
 
 		return {
-			helloMessage
+			handleRouterGoHome,
+			userName,
+			handleMenuClick,
+			handleRouterGoLogin
 		};
 	},
 	components: {}
@@ -36,6 +79,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.logo-wrapper {
+	color: lavenderblush;
+	cursor: pointer;
+}
 .ant-layout {
 	min-height: 100vh;
 }
