@@ -1,7 +1,9 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 
-//  按需手动引入 antd
+const app = createApp(App);
+
+//  按需手动引入|使用 ant-design-vue
 import {
 	Layout,
 	Row,
@@ -14,12 +16,6 @@ import {
 	Form
 } from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
-
-//  引入 vueRouter
-import router from "./router/index";
-
-const app = createApp(App);
-//  使用 antd
 app
 	.use(Layout)
 	.use(Row)
@@ -31,7 +27,12 @@ app
 	.use(Button)
 	.use(Form);
 
-//  使用 router
+//  引入|使用 vue-router
+import router from "@/router/index";
 app.use(router);
+
+//  引入|使用 vuex
+import store from "@/store/index";
+app.use(store);
 
 app.mount("#app");

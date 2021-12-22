@@ -9,8 +9,8 @@
 				</a-col>
 				<a-col :span="12"></a-col>
 				<a-col :span="4">
-					<a-dropdown-button v-if="false">
-						{{ userName }}
+					<a-dropdown-button v-if="user.isLogin">
+						{{ user.userName }}
 						<template #overlay>
 							<a-menu @click="handleMenuClick">
 								<a-menu-item key="usercenter"> 个人中心 </a-menu-item>
@@ -29,16 +29,18 @@
 		</a-layout-content>
 		<a-layout-footer>
 			<a-row>
-				<a-col :span="6">尘心@仿慕课乐高</a-col>
-				<a-col :span="18">footer</a-col>
+				<a-col :span="6">尘心@《仿慕课乐高》</a-col>
 			</a-row>
 		</a-layout-footer>
 	</a-layout>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+
+import { GlobalDataProps } from "@/store/index";
 
 export default defineComponent({
 	name: "App",
@@ -52,13 +54,15 @@ export default defineComponent({
 		//#endregion logo 相关
 
 		//#region 用户操作相关
-		const userName = "Chen xin";
+		const store = useStore<GlobalDataProps>();
+		const user = computed(() => store.state.user);
 		const handleMenuClick = (data: any) => {
 			const { key } = data;
 			if (key === "usercenter") {
-				console.log("个人中心");
+				router.push("/mycenter");
 			} else if (key === "logout") {
-				console.log("登出");
+				store.commit("logout");
+				router.push("/");
 			}
 		};
 		//  登录页面跳转
@@ -69,7 +73,7 @@ export default defineComponent({
 
 		return {
 			handleRouterGoHome,
-			userName,
+			user,
 			handleMenuClick,
 			handleRouterGoLogin
 		};

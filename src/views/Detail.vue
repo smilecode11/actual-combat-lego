@@ -1,12 +1,23 @@
 <template>
 	<a-row class="detail-container">
-		<a-col :span="12" class="detail-left">detail-container Left</a-col>
+		<a-col :span="12" class="detail-left">
+			<div>{{ templateDetail }}</div>
+		</a-col>
 		<a-col :span="12" class="detail-right">
-			<div>detail-container Right</div>
-			<div class="info-wrapper">info-wrapper</div>
+			<div class="info-wrapper">
+				<div class="title">title: {{ templateDetail.title }}</div>
+				<div class="desc" v-if="templateDetail.description">
+					desc: {{ templateDetail.description }}
+				</div>
+				<div class="praise">parise: {{ templateDetail.praise }}</div>
+				<div class="collect">collect: {{ templateDetail.collect }}</div>
+			</div>
 			<div class="opera-wrapper">
-				<div>opera-wrapper</div>
-				<a-button type="primary" danger @click="handleRouterGoEditor">
+				<a-button
+					type="primary"
+					danger
+					@click="handleRouterGoEditor(templateDetail.id)"
+				>
 					<template #icon><EditOutlined /></template>
 					编辑
 				</a-button>
@@ -16,26 +27,36 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { useStore } from "vuex";
 import { Button } from "ant-design-vue";
 import { EditOutlined } from "@ant-design/icons-vue";
+
+import { GlobalDataProps, TemplateProps } from "@/store/index";
 
 export default defineComponent({
 	name: "Detail",
 	setup() {
 		const route = useRoute();
 		const router = useRouter();
+		const store = useStore<GlobalDataProps>();
 
-		//#region 详情路由跳转事件
+		//#region 详情数据获取
+		const currentTemplateId = Number(route.params.id);
+		const templateDetail = computed<TemplateProps>(() =>
+			store.getters.getTemplateById(currentTemplateId)
+		);
+
 		const handleRouterGoEditor = () => {
 			router.push({
-				path: `/editor/${route.params.id}`
+				path: `/editor/${currentTemplateId}`
 			});
 		};
 		//#endregion
 
 		return {
+			templateDetail,
 			handleRouterGoEditor
 		};
 	},

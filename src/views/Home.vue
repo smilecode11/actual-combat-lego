@@ -17,94 +17,45 @@
 		<!-- 模板数据 -->
 		<div class="template-wrapper">
 			<h2>推荐模板</h2>
-			<a-row :gutter="24">
-				<a-col v-for="(item, index) in ListData.list" :key="index" :span="6">
-					<a-card hoverable class="card-item-wrap" :loading="listDataLoading">
-						<template #cover>
-							<img
-								alt="example"
-								src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-							/>
-						</template>
-						<template class="ant-card-actions" #actions>
-							<setting-outlined key="setting" />
-							<edit-outlined
-								key="edit"
-								@click="handleRouterGoDetail(item.id)"
-							/>
-							<ellipsis-outlined key="ellipsis" />
-						</template>
-						<a-card-meta title="Title" description="This is the description">
-							<template #avatar>
-								<a-avatar
-									src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-								/>
-							</template>
-						</a-card-meta>
-					</a-card>
-				</a-col>
-			</a-row>
+			<TemplateList
+				:list-data="ListData.list"
+				:list-data-loading="listDataLoading"
+			/>
 			<div class="opera-wrap">
 				<a-button @click="handleLoadMoreWithTemplate">查看更多...</a-button>
 			</div>
 		</div>
 
 		<!-- 我的作品 -->
-		<div class="my-works-wrapper">
-			<h2>我的作品</h2>
-			<a-row :gutter="24">
-				<a-col
-					v-for="(item, index) in ListDataWithMine.list"
-					:key="index"
-					:span="6"
-				>
-					<a-card
-						hoverable
-						class="card-item-wrap"
-						:loading="listDataWithMineLoading"
-					>
-						<template #cover>
-							<img
-								alt="example"
-								src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-							/>
-						</template>
-						<template class="ant-card-actions" #actions>
-							<setting-outlined key="setting" />
-							<edit-outlined
-								key="edit"
-								@click="handleRouterGoDetail(item.id)"
-							/>
-							<ellipsis-outlined key="ellipsis" />
-						</template>
-						<a-card-meta title="Title" description="This is the description">
-							<template #avatar>
-								<a-avatar
-									src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-								/>
-							</template>
-						</a-card-meta>
-					</a-card>
-				</a-col>
-			</a-row>
+		<div class="my-works-wrapper" v-if="userStore.isLogin">
+			<div class="title-wrapper">
+				<h2>我的作品</h2>
+				<router-link to="/mywork">查看我全部作品 <RightOutlined /></router-link>
+			</div>
+			<TemplateList
+				:list-data="ListDataWithMine.list"
+				:list-data-loading="listDataWithMineLoading"
+			/>
 		</div>
 	</a-row>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
-import { Avatar as AAvatar, Button as AButton } from "ant-design-vue";
-import {
-	SettingOutlined,
-	EditOutlined,
-	EllipsisOutlined
-} from "@ant-design/icons-vue";
+import { defineComponent, reactive, ref, computed } from "vue";
+import { useStore } from "vuex";
+import { Button as AButton } from "ant-design-vue";
+import { RightOutlined } from "@ant-design/icons-vue";
+import TemplateList from "@/components/TemplateList.vue";
 
 import { nanoid } from "nanoid";
+
+import { GlobalDataProps } from "@/store/index";
+import { TemplatesProps } from "@/store/templates";
 export default defineComponent({
 	name: "Home",
 	setup() {
+		const store = useStore<GlobalDataProps>();
+
 		//#region 搜索相关
 		const searchParams = reactive({
 			keyword: "",
@@ -124,65 +75,55 @@ export default defineComponent({
 		//#region 模板列表相关
 		//  模板数据获取
 		const listDataLoading = ref(true);
-		const ListData = reactive({
-			list: [
-				{
-					id: nanoid()
-				},
-				{
-					id: nanoid()
-				},
-				{
-					id: nanoid()
-				},
-				{
-					id: nanoid()
-				},
-				{
-					id: nanoid()
-				},
-				{
-					id: nanoid()
-				},
-				{
-					id: nanoid()
-				},
-				{
-					id: nanoid()
-				}
-			],
-			totla: 12
-		});
+		const ListData = computed(() => store.state.templates);
 		setTimeout(() => {
 			listDataLoading.value = false;
 		}, 700);
+
 		//  我的作品
+		const userStore = computed(() => store.state.user);
 		const listDataWithMineLoading = ref(true);
-		const ListDataWithMine = reactive({
+
+		const ListDataWithMine: TemplatesProps = {
 			list: [
 				{
-					id: nanoid()
+					id: 10000,
+					title: nanoid(),
+					description: "",
+					cover: "",
+					praise: 0,
+					collect: 0
 				},
 				{
-					id: nanoid()
+					id: 9999,
+					title: nanoid(),
+					description: "",
+					cover: "",
+					praise: 0,
+					collect: 0
 				},
 				{
-					id: nanoid()
+					id: 9998,
+					title: nanoid(),
+					description: "",
+					cover: "",
+					praise: 0,
+					collect: 0
 				},
 				{
-					id: nanoid()
+					id: 9997,
+					title: nanoid(),
+					description: "",
+					cover: "",
+					praise: 0,
+					collect: 0
 				}
 			],
-			totla: 12
-		});
+			total: 12
+		};
 		setTimeout(() => {
 			listDataWithMineLoading.value = false;
 		}, 700);
-		// 详情跳转事件注册
-		const router = useRouter();
-		const handleRouterGoDetail = (id: string | number) => {
-			router.push(`/detail/${id}`);
-		};
 		//#endregion 模板列表相关
 
 		return {
@@ -193,15 +134,13 @@ export default defineComponent({
 			listDataLoading,
 			ListDataWithMine,
 			listDataWithMineLoading,
-			handleRouterGoDetail
+			userStore
 		};
 	},
 	components: {
-		AAvatar,
 		AButton,
-		SettingOutlined,
-		EditOutlined,
-		EllipsisOutlined
+		TemplateList,
+		RightOutlined
 	}
 });
 </script>
@@ -229,8 +168,10 @@ export default defineComponent({
 	width: 100%;
 }
 
-.card-item-wrap {
-	margin-bottom: 32px;
+.title-wrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .opera-wrap {

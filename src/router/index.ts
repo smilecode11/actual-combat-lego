@@ -1,11 +1,13 @@
 // import { defineAsyncComponent } from "vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 
-import DefaultLayout from "../layout/Default.vue";
-import Home from "../views/Home.vue";
-import Detail from "../views/Detail.vue";
-import Login from "../views/Login.vue";
-import Page404 from "../views/Page404.vue";
+import DefaultLayout from "@/layout/Default.vue";
+import Home from "@/views/Home.vue";
+import Detail from "@/views/Detail.vue";
+import Login from "@/views/Login.vue";
+import MyCenter from "@/views/MyCenter.vue";
+import MyWork from "@/views/MyWork.vue";
+import Page404 from "@/views/Page404.vue";
 
 const routes = [
 	{
@@ -20,6 +22,28 @@ const routes = [
 			{
 				path: "",
 				component: Home
+			}
+		]
+	},
+	{
+		path: "/mycenter",
+		name: "MyCenter",
+		component: DefaultLayout,
+		children: [
+			{
+				path: "",
+				component: MyCenter
+			}
+		]
+	},
+	{
+		path: "/mywork",
+		name: "MyWork",
+		component: DefaultLayout,
+		children: [
+			{
+				path: "",
+				component: MyWork
 			}
 		]
 	},

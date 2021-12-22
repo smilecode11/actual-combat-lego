@@ -5,7 +5,6 @@
 			<!-- 登录模块 -->
 			<section class="form-wrapper">
 				<a-form layout="horizontal" :model="formState" @finish="handleFinish">
-					<!-- @finishFailed="handleFinishFailed" -->
 					<a-form-item>
 						<a-input v-model:value="formState.user" placeholder="用户名">
 							<template #prefix
@@ -60,13 +59,15 @@
 import { defineComponent, reactive, ref, computed } from "vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
-/** 倒计时时长*/
-const COUNT_NUM = 5;
+import { COUNT_NUM } from "@/model/constant";
 
 export default defineComponent({
 	name: "Login",
 	setup() {
+		const store = useStore();
+
 		//#region 登录相关
 		const codeNum = ref(0);
 		//	发送验证码
@@ -92,9 +93,13 @@ export default defineComponent({
 		//	登录
 		const handleFinish = () => {
 			loginLoading.value = true;
-			console.error("handleFinish: ", formState);
 			setTimeout(() => {
 				loginLoading.value = false;
+				//	更新 store 数据
+				store.commit("login", {
+					...formState
+				});
+				//	路由跳转
 				router.push(`/home`);
 			}, 1500);
 		};
@@ -137,7 +142,6 @@ export default defineComponent({
 .right-wrapper .form-wrapper {
 	padding: 12px;
 	width: 360px;
-	/* border: 1px solid lavenderblush; */
 }
 
 .form-wrapper .code-wrapper /deep/ .ant-form-item-control-input-content {
