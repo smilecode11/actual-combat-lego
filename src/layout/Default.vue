@@ -56,7 +56,7 @@ export default defineComponent({
 		//#region 用户操作相关
 		const store = useStore<GlobalDataProps>();
 		const user = computed(() => store.state.user);
-		const handleMenuClick = (data: any) => {
+		const handleMenuClick = (data: { key: string }) => {
 			const { key } = data;
 			if (key === "usercenter") {
 				router.push("/mycenter");
@@ -96,7 +96,6 @@ export default defineComponent({
 }
 
 .ant-layout-content {
-	/* padding: 18px 50px; */
 	background: #fff;
 }
 .ant-layout-footer {

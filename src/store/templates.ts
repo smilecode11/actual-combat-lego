@@ -16,14 +16,14 @@ export interface TemplatesProps {
 }
 
 const testData = [
-	{ id: 1, title: "first", cover: "", praise: 0, collect: 0 },
-	{ id: 2, title: "second", cover: "", praise: 0, collect: 0 },
-	{ id: 3, title: "third", cover: "", praise: 0, collect: 0 },
-	{ id: 4, title: "444", cover: "", praise: 0, collect: 0 },
-	{ id: 5, title: "555", cover: "", praise: 0, collect: 0 },
-	{ id: 6, title: "666", cover: "", praise: 0, collect: 0 },
-	{ id: 7, title: "777", cover: "", praise: 0, collect: 0 },
-	{ id: 8, title: "888", cover: "", praise: 0, collect: 0 }
+	{ id: 1, title: "first", cover: "", praise: 99, collect: 0 },
+	{ id: 2, title: "second", cover: "", praise: 98, collect: 0 },
+	{ id: 3, title: "third", cover: "", praise: 97, collect: 0 },
+	{ id: 4, title: "444", cover: "", praise: 96, collect: 0 },
+	{ id: 5, title: "555", cover: "", praise: 95, collect: 0 },
+	{ id: 6, title: "666", cover: "", praise: 94, collect: 0 },
+	{ id: 7, title: "777", cover: "", praise: 93, collect: 0 },
+	{ id: 8, title: "888", cover: "", praise: 10, collect: 0 }
 ];
 
 const templates: Module<TemplatesProps, GlobalDataProps> = {
@@ -33,9 +33,8 @@ const templates: Module<TemplatesProps, GlobalDataProps> = {
 	},
 	getters: {
 		// 根据 id 获取单个模板数据
-		getTemplateById: (state, getters, rootState) => (id: number) => {
-			console.log(getters, rootState);
-			return state.list.find((template) => template.id === id);
+		getTemplateById: (state /*  getters, rootState */) => (id: number) => {
+			return state.list.find((template) => template.id === id) || {};
 		}
 	}
 };

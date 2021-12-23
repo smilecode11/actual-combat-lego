@@ -1,13 +1,10 @@
 import { createStore } from "vuex";
 import user, { UserProps } from "./user";
-import templates, { TemplateProps } from "./templates";
+import templates, { TemplatesProps } from "./templates";
 
 export interface GlobalDataProps {
 	user: UserProps;
-	templates: {
-		list: TemplateProps[];
-		total: number;
-	};
+	templates: TemplatesProps;
 }
 
 const store = createStore<GlobalDataProps>({
