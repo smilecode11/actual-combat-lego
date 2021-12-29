@@ -10,10 +10,14 @@ import {
 	Col,
 	Card,
 	Input,
+	InputNumber,
 	Dropdown,
 	Menu,
 	Button,
-	Form
+	Form,
+	Slider,
+	Radio,
+	Select
 } from "ant-design-vue";
 import "ant-design-vue/dist/antd.css";
 app
@@ -22,10 +26,14 @@ app
 	.use(Col)
 	.use(Card)
 	.use(Input)
+	.use(InputNumber)
 	.use(Dropdown)
 	.use(Menu)
 	.use(Button)
-	.use(Form);
+	.use(Form)
+	.use(Slider)
+	.use(Radio)
+	.use(Select);
 
 //  引入|使用 vue-router
 import router from "@/router/index";

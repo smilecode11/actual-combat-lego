@@ -13,11 +13,7 @@
 				<div class="collect">collect: {{ templateDetail.collect }}</div>
 			</div>
 			<div class="opera-wrapper">
-				<a-button
-					type="primary"
-					danger
-					@click="handleRouterGoEditor(templateDetail.id)"
-				>
+				<a-button type="primary" danger @click="handleRouterGoEditor()">
 					<template #icon><EditOutlined /></template>
 					编辑
 				</a-button>
@@ -33,7 +29,8 @@ import { useStore } from "vuex";
 import { Button } from "ant-design-vue";
 import { EditOutlined } from "@ant-design/icons-vue";
 
-import { GlobalDataProps, TemplateProps } from "@/store/index";
+import { GlobalDataProps } from "@/store/index";
+import { TemplateProps } from "@/store/templates";
 
 export default defineComponent({
 	name: "Detail",
