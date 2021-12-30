@@ -25,7 +25,8 @@ const testElements: ElementData[] = [
 			color: "deeppink",
 			fontSize: "22px",
 			textAlign: "left",
-			fontFamily: "宋体"
+			fontFamily: "宋体",
+			opacity: "1"
 		},
 		name: "l-text"
 	},
@@ -36,7 +37,8 @@ const testElements: ElementData[] = [
 			fontSize: "18px",
 			lineHeight: "1.7",
 			textAlign: "center",
-			fontFamily: "黑体"
+			fontFamily: "黑体",
+			opacity: "0.4"
 		},
 		name: "l-text"
 	},

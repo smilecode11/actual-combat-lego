@@ -3,6 +3,9 @@ export const defaultTextTemplates = [
 		text: "大标题",
 		fontSize: "30px",
 		fontWeight: "bold",
+		fontFamily: "",
+		textAlign: "center",
+		opacity: "1",
 		tag: "h2"
 	},
 	{
@@ -11,10 +14,13 @@ export const defaultTextTemplates = [
 	},
 	{
 		text: "链接内容",
+		fontFamily: "",
+		textAlign: "left",
+		fontSize: "12px",
 		color: "#1890ff",
 		textDecoration: "underline",
-		tag: "p",
-		cursor: "pointer"
+		opacity: "0.8",
+		tag: "p"
 	},
 	{
 		text: "链接内容",
@@ -23,7 +29,6 @@ export const defaultTextTemplates = [
 		backgroundColor: "skyblue",
 		textAlign: "center",
 		width: "64px",
-		height: "25px",
-		cursor: "pointer"
+		height: "25px"
 	}
 ];
