@@ -10,9 +10,15 @@ const useComponentCommon = (
 	const styleProps = computed(() => pick(props, picks));
 
 	//  click event 注册
-	const handleClick = () => {
+	const handleClick = (ev: any) => {
 		if (props.actionType === "url" && props.url) {
-			// window.location.href = props.url;
+			//	画布中的元素点击事件失效
+			const canvasControlDom =
+				document.getElementsByClassName("canvas-container")[0];
+			if (ev.path.find((element: Element) => element === canvasControlDom))
+				return;
+
+			window.location.href = props.url;
 		}
 	};
 

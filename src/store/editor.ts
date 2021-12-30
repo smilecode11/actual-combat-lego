@@ -33,7 +33,7 @@ const testElements: ElementData[] = [
 	{
 		id: uuidv4(),
 		props: {
-			text: "hello2",
+			text: "hello world",
 			fontSize: "18px",
 			lineHeight: "1.7",
 			textAlign: "center",
