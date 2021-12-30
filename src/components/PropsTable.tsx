@@ -16,6 +16,7 @@ interface FormProps {
 }
 
 import { Slider, Select, Input, InputNumber, Radio } from 'ant-design-vue'
+
 const mapComponents = {
     'a-input': Input,
     'a-textarea': Input.TextArea,
@@ -25,7 +26,7 @@ const mapComponents = {
     'a-input-number': InputNumber,
     'a-radio-group': Radio.Group,
     'a-radio-button': Radio.Button
-}
+} as { [key: string]: any }
 
 const getEventName = (eventName: string) => {
     return eventName.charAt(0).toUpperCase() + eventName.slice(1)
@@ -65,7 +66,7 @@ export default defineComponent({
                     Object.keys(finallyProps.value).map((key) => {
                         const item = finallyProps.value[key];
                         const ComponentName = mapComponents[item.component];
-                        const SubComponetName = mapComponents[item.subComponent];
+                        const SubComponetName = mapComponents[item.subComponent as string];
                         const props = {
                             [item.valueProps]: item.value,
                             ...item.extraProps,
