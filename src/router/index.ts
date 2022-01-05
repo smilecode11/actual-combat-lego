@@ -80,6 +80,11 @@ const routes = [
 			}
 		]
 	},
+	{
+		path: "/example",
+		component: () => import("@/views/Example.vue"),
+		name: "Example"
+	},
 	//  兜底路由设置
 	{
 		path: "/:w+",
