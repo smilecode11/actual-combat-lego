@@ -74,7 +74,7 @@ describe("HelloWorld.vue", () => {
 		expect(wrapper.find(".request-error").exists()).toBeFalsy();
 	});
 
-	it.skip("测试异步请求调用失败", async () => {
+	it("测试异步请求调用失败", async () => {
 		wrapper = shallowMount(HelloWorld, {
 			props: { message: "hello, mock request" }
 		});

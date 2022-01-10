@@ -9,18 +9,11 @@
 				</a-col>
 				<a-col :span="12"></a-col>
 				<a-col :span="4">
-					<a-dropdown-button v-if="user.isLogin">
-						{{ user.userName }}
-						<template #overlay>
-							<a-menu @click="handleMenuClick">
-								<a-menu-item key="usercenter"> 个人中心 </a-menu-item>
-								<a-menu-item key="logout"> 登出 </a-menu-item>
-							</a-menu>
-						</template>
-					</a-dropdown-button>
-					<a-button @click="handleRouterGoLogin" type="primary" v-else
-						>登录</a-button
-					>
+					<user-profile
+						:user="user"
+						@onMenuClick="handleMenuClick"
+						@onRouterGoLogin="handleRouterGoLogin"
+					></user-profile>
 				</a-col>
 			</a-row>
 		</a-layout-header>
@@ -41,6 +34,8 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 import { GlobalDataProps } from "@/store/index";
+
+import UserProfile from "./components/UserProfile.vue";
 
 export default defineComponent({
 	name: "App",
@@ -78,7 +73,9 @@ export default defineComponent({
 			handleRouterGoLogin
 		};
 	},
-	components: {}
+	components: {
+		UserProfile
+	}
 });
 </script>
 

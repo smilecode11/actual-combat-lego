@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-
+import { cloneDeep } from "lodash-es";
 import LText from "@/packages/LText.vue";
 
 export default defineComponent({
@@ -26,7 +26,7 @@ export default defineComponent({
 	setup(props, context) {
 		// 组件点击事件
 		const templateItemClick = (item: any) => {
-			context.emit("onItemClick", item);
+			context.emit("onItemClick", cloneDeep(item));
 		};
 		return {
 			templateItemClick

@@ -2,7 +2,7 @@ import { Module } from "vuex";
 import { v4 as uuidv4 } from "uuid";
 import { GlobalDataProps } from "./index";
 import { TextComponentProps } from "@/packages/defaultProps";
-
+import { cloneDeep } from "lodash-es";
 export interface EditorProps {
 	elements: ElementData[];
 	currentElement: string | null; //  当前选择元素
@@ -79,7 +79,9 @@ const editor: Module<EditorProps, GlobalDataProps> = {
 			const updateElement = state.elements.find(
 				(element) => element.id === state.currentElement
 			);
-			if (updateElement) updateElement.props[key] = value;
+			if (updateElement) {
+				updateElement.props[key] = value;
+			}
 		},
 		/** 移除 element */
 		removeElement(state, delElement: ElementData) {

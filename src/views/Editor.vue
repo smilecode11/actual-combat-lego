@@ -75,7 +75,7 @@ export default defineComponent({
 		//#endregion 获取路由信息, 请求展示数据
 
 		//#region 左侧组件渲染及相关事件
-		const textTemplatesList = defaultTextTemplates;
+		const textTemplatesList = computed(() => defaultTextTemplates);
 		const addComponent = (props: any) => {
 			store.commit("addElement", props);
 		};
