@@ -17,8 +17,10 @@ import {
 	Form,
 	Slider,
 	Radio,
-	Select
+	Select,
+	message
 } from "ant-design-vue";
+
 import "ant-design-vue/dist/antd.css";
 app
 	.use(Layout)
@@ -42,5 +44,8 @@ app.use(router);
 //  引入|使用 vuex
 import store from "@/store/index";
 app.use(store);
+
+//	全局属性挂载 message
+app.config.globalProperties.message = message;
 
 app.mount("#app");

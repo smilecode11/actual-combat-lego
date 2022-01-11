@@ -9,11 +9,7 @@
 				</a-col>
 				<a-col :span="12"></a-col>
 				<a-col :span="4">
-					<user-profile
-						:user="user"
-						@onMenuClick="handleMenuClick"
-						@onRouterGoLogin="handleRouterGoLogin"
-					></user-profile>
+					<user-profile :user="user"></user-profile>
 				</a-col>
 			</a-row>
 		</a-layout-header>
@@ -31,9 +27,7 @@
 <script lang="ts">
 import { defineComponent, computed } from "vue";
 import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-
-import { GlobalDataProps } from "@/store/index";
+import { useStore } from "_vuex@4.0.2@vuex";
 
 import UserProfile from "./components/UserProfile.vue";
 
@@ -41,6 +35,8 @@ export default defineComponent({
 	name: "App",
 	setup() {
 		const router = useRouter();
+		const store = useStore();
+		const user = computed(() => store.state.user);
 
 		//#region logo 相关
 		const handleRouterGoHome = () => {
@@ -48,29 +44,9 @@ export default defineComponent({
 		};
 		//#endregion logo 相关
 
-		//#region 用户操作相关
-		const store = useStore<GlobalDataProps>();
-		const user = computed(() => store.state.user);
-		const handleMenuClick = (data: { key: string }) => {
-			const { key } = data;
-			if (key === "usercenter") {
-				router.push("/mycenter");
-			} else if (key === "logout") {
-				store.commit("logout");
-				router.push("/");
-			}
-		};
-		//  登录页面跳转
-		const handleRouterGoLogin = () => {
-			router.push(`/login`);
-		};
-		//#endregion
-
 		return {
-			handleRouterGoHome,
 			user,
-			handleMenuClick,
-			handleRouterGoLogin
+			handleRouterGoHome
 		};
 	},
 	components: {

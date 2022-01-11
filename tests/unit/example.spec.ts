@@ -21,7 +21,7 @@ beforeAll(() => {
 describe("HelloWorld.vue", () => {
 	it("测试 props 传递值是否正确, Hello 组件是否被挂载", () => {
 		// console.log(wrapper.props()); //   { message: new message }
-		console.log(wrapper.findComponent(Hello).exists()); //  true
+		// console.log(wrapper.findComponent(Hello).exists()); //  true
 	});
 
 	it("测试 count 相关事件, 以及 count 值的变化", async () => {
