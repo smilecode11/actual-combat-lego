@@ -1,9 +1,8 @@
-import { mount, shallowMount, VueWrapper } from "@vue/test-utils";
+import { shallowMount, VueWrapper } from "@vue/test-utils";
 import axios from "axios";
 import flushPromises from "flush-promises";
 
 import HelloWorld from "@/components/HelloWorld.vue";
-import Hello from "@/components/Hello";
 
 jest.mock("axios");
 // 设置 mockAxios 集成 jest mock 方法

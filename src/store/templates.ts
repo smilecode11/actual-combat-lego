@@ -15,7 +15,7 @@ export interface TemplatesProps {
 	total: number;
 }
 
-const testData = [
+export const testData = [
 	{ id: 1, title: "first", cover: "", praise: 99, collect: 0 },
 	{ id: 2, title: "second", cover: "", praise: 98, collect: 0 },
 	{ id: 3, title: "third", cover: "", praise: 97, collect: 0 },

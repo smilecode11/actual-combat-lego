@@ -2,7 +2,6 @@ import { Module } from "vuex";
 import { v4 as uuidv4 } from "uuid";
 import { GlobalDataProps } from "./index";
 import { TextComponentProps } from "@/packages/defaultProps";
-import { cloneDeep } from "lodash-es";
 export interface EditorProps {
 	elements: ElementData[];
 	currentElement: string | null; //  当前选择元素
@@ -10,14 +9,14 @@ export interface EditorProps {
 
 export interface ElementData {
 	//  元素属性
-	props: { [key: string]: any };
+	props: { [P in keyof TextComponentProps]?: any };
 	// uuid v4
 	id: string;
 	//  l-text | l-image | ...
 	name: string;
 }
 
-const testElements: ElementData[] = [
+export const testElements: ElementData[] = [
 	{
 		id: uuidv4(),
 		props: {
@@ -80,7 +79,7 @@ const editor: Module<EditorProps, GlobalDataProps> = {
 				(element) => element.id === state.currentElement
 			);
 			if (updateElement) {
-				updateElement.props[key] = value;
+				updateElement.props[key as keyof TextComponentProps] = value;
 			}
 		},
 		/** 移除 element */
