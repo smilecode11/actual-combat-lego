@@ -25,7 +25,10 @@ export const testElements: ElementData[] = [
 			fontSize: "22px",
 			textAlign: "left",
 			fontFamily: "宋体",
-			opacity: "1"
+			opacity: "1",
+			fontWeight: "normal",
+			fontStyle: "normal",
+			textDecoration: "normal"
 		},
 		name: "l-text"
 	},

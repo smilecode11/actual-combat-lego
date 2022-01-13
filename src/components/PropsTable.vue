@@ -1,25 +1,43 @@
 <template>
 	<div class="props-table">
-		<div class="prop-item" v-for="(item, index) in finallyProps" :key="index">
-			<span class="label" v-if="item">{{ item.text }}</span>
-			<component
-				class="value"
-				:is="item.component"
-				:[item.valueProps]="item.value"
-				v-bind="item.extraProps"
-				v-on="item.events"
-			>
-				<template v-if="item.subComponent">
-					<component
-						:is="item.subComponent"
-						v-for="(option, k) in item.options"
-						:key="k"
-						:value="option.value"
-					>
-						<RenderVNode :vNode="option.text"></RenderVNode>
-					</component>
-				</template>
-			</component>
+		<div
+			class="prop-item"
+			:class="{ 'prop-item-inline': item.isLineBlock }"
+			v-for="(item, index) in finallyProps"
+			:key="index"
+		>
+			<template v-if="!item.isLineBlock">
+				<span class="label" v-if="item">{{ item.text }}</span>
+				<component
+					class="value"
+					:is="item.component"
+					:[item.valueProps]="item.value"
+					v-bind="item.extraProps"
+					v-on="item.events"
+				>
+					<template v-if="item.subComponent">
+						<component
+							:is="item.subComponent"
+							v-for="(option, k) in item.options"
+							:key="k"
+							:value="option.value"
+						>
+							<RenderVNode :vNode="option.text"></RenderVNode>
+						</component>
+					</template>
+				</component>
+			</template>
+			<template v-else>
+				<component
+					class="value"
+					:is="item.component"
+					:text="item.text"
+					:[item.valueProps]="item.value"
+					v-bind="item.extraProps"
+					v-on="item.events"
+				>
+				</component>
+			</template>
 		</div>
 	</div>
 </template>
@@ -32,8 +50,10 @@ import { TextComponentProps } from "@/packages/defaultProps";
 
 import RenderVNode from "@/components/RenderVNode";
 import ColorPicker from "@/packages/ColorPicker.vue";
+import IconSwitch from "@/packages/IconSwitch.vue";
 
 interface FormProps {
+	isLineBlock?: boolean;
 	component: string;
 	subComponent?: string; //	子组件
 	value?: string;
@@ -94,7 +114,8 @@ export default defineComponent({
 	},
 	components: {
 		RenderVNode,
-		ColorPicker
+		ColorPicker,
+		IconSwitch
 	}
 });
 </script>
@@ -105,6 +126,11 @@ export default defineComponent({
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-start;
+}
+
+.prop-item.prop-item-inline {
+	margin-right: 4px;
+	display: inline-flex;
 }
 
 .prop-item .label {

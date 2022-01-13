@@ -2,6 +2,7 @@ import { h, VNode } from "vue";
 import { TextComponentProps } from "@/packages/defaultProps";
 
 export interface PropsToForm {
+	isLineBlock?: boolean;
 	component: string;
 	text: string;
 	extraProps?: { [key: string]: any }; //  拓展属性
@@ -120,5 +121,35 @@ export const mapPropsToForms: PropsToForms = {
 	color: {
 		text: "字体颜色",
 		component: 'color-picker'
+	},
+	fontWeight: {
+		isLineBlock: true,
+		text: "B", // bold normal
+		component: 'icon-switch',
+		extraProps: {
+			promptText: "加粗",
+		},
+		initTransform: (v: string) => v !== 'normal' ? 'actived' : 'normal',
+		afterTransform: (v: string) => v !== 'normal' ? 'bold' : 'normal',
+	},
+	fontStyle: {
+		isLineBlock: true,
+		text: "/",	//	italic normal
+		component: "icon-switch",
+		extraProps: {
+			promptText: "斜体",
+		},
+		initTransform: (v: string) => v !== 'normal' ? 'actived' : 'normal',
+		afterTransform: (v: string) => v !== 'normal' ? 'italic' : 'normal',
+	},
+	textDecoration: {
+		isLineBlock: true,
+		text: "_",	//	underline none
+		component: "icon-switch",
+		extraProps: {
+			promptText: "下划线",
+		},
+		initTransform: (v: string) => v !== 'none' ? 'actived' : 'normal',
+		afterTransform: (v: string) => v !== 'normal' ? 'underline' : 'none',
 	}
 };

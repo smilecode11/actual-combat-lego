@@ -1,5 +1,5 @@
 <template>
-	<div class="lego-color-picker">
+	<div class="color-picker">
 		<input type="color" :value="value" @input="onChange" />
 		<ul class="color-wrapper">
 			<li :class="'item' + index" v-for="(item, index) in colors" :key="index">
@@ -56,11 +56,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.lego-color-picker {
+.color-picker {
 	display: flex;
 }
 
-.lego-color-picker input {
+.color-picker input {
 	flex: 0 0 48px;
 	height: 48px;
 }
