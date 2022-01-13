@@ -61,6 +61,7 @@ import ComponentList from "@/components/ComponentList.vue";
 import EditWrapper from "@/components/EditWrapper.vue";
 import PropsTable from "@/components/PropsTable.vue";
 // import PropsTable from "@/components/PropsTable";
+
 import { defaultTextTemplates } from "@/packages/defaultTemplates";
 
 export default defineComponent({
@@ -109,6 +110,10 @@ export default defineComponent({
 		};
 		//#endregion 其他模块相关
 
+		const handleColorChange = (color: any) => {
+			// console.log(color);
+		};
+
 		return {
 			editorId,
 			handleGoBack,
@@ -119,7 +124,8 @@ export default defineComponent({
 			currentElement,
 			activeElement,
 			handleDelElement,
-			handleElementChange
+			handleElementChange,
+			handleColorChange
 		};
 	},
 	components: {

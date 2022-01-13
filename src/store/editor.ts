@@ -21,7 +21,7 @@ export const testElements: ElementData[] = [
 		id: uuidv4(),
 		props: {
 			text: "hello",
-			color: "deeppink",
+			color: "#000000",
 			fontSize: "22px",
 			textAlign: "left",
 			fontFamily: "宋体",

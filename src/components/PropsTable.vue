@@ -31,6 +31,7 @@ import { mapPropsToForms } from "@/packages/mapProps";
 import { TextComponentProps } from "@/packages/defaultProps";
 
 import RenderVNode from "@/components/RenderVNode";
+import ColorPicker from "@/packages/ColorPicker.vue";
 
 interface FormProps {
 	component: string;
@@ -92,7 +93,8 @@ export default defineComponent({
 		};
 	},
 	components: {
-		RenderVNode
+		RenderVNode,
+		ColorPicker
 	}
 });
 </script>

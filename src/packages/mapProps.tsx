@@ -116,5 +116,9 @@ export const mapPropsToForms: PropsToForms = {
 		},
 		initTransform: (v: string) => (parseFloat(v)) * 100,
 		afterTransform: (v: number) => String((v) / 100)
+	},
+	color: {
+		text: "字体颜色",
+		component: 'color-picker'
 	}
 };
