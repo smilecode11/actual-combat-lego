@@ -10,6 +10,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^6.0.1",
     "ant-design-vue": "^3.0.0-alpha.14",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
@@ -35,7 +36,7 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-typescript": "^5.0.2",
-    "@vue/test-utils": "~2.0.0-beta.14",
+    "@vue/test-utils": "2.0.0-beta.14",
     "babel-plugin-import": "^1.13.3",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
