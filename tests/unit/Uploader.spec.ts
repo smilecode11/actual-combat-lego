@@ -1,4 +1,4 @@
-import { shallowMount, VueWrapper } from "@vue/test-utils";
+import { shallowMount, mount, VueWrapper } from "@vue/test-utils";
 import axios from "axios";
 import flushPromises from "flush-promises";
 import Uploader from "@/packages/Uploader.vue";
@@ -10,20 +10,22 @@ const mockAxios = axios as jest.Mocked<typeof axios>;
 const testFile = new File(["xyz"], "test.png", {
 	type: "image/png"
 });
-const testFile2 = new File(["abc"], "test2.png", {
-	type: "image/png"
-});
-const testFile3 = new File(["efg"], "test3.png", {
-	type: "image/png"
-});
 
 const mockComponent = {
 	template: "<div><slot></slot></div>"
 };
 const mockComponents = {
-	LoadingOutlined: mockComponent,
 	DeleteOutlined: mockComponent,
+	LoadingOutlined: mockComponent,
 	FileOutlined: mockComponent
+};
+
+const setInputValue = (elem: HTMLInputElement) => {
+	const files = [testFile] as any;
+	Object.defineProperty(elem, "files", {
+		value: files,
+		writable: false
+	});
 };
 
 describe("Uploader Component Test", () => {
@@ -33,6 +35,7 @@ describe("Uploader Component Test", () => {
 				action: "test.url"
 			},
 			global: {
+				// 局部引入组件 mock
 				stubs: mockComponents
 			}
 		});
@@ -52,11 +55,7 @@ describe("Uploader Component Test", () => {
 			.element as HTMLInputElement;
 
 		//  创建 file 对象
-		const files = [testFile] as any;
-		Object.defineProperty(fileInput, "files", {
-			value: files,
-			writable: false
-		});
+		setInputValue(fileInput);
 		// fileInput.files = files;
 		//  触发 change 需要事件对象
 		await wrapper.get("input").trigger("change");
@@ -94,7 +93,31 @@ describe("Uploader Component Test", () => {
 		expect(wrapper.findAll("li.upload-item").length).toBe(1);
 	});
 
-	it("测试上传文件列表", async () => {});
+	it.only("测试上传组件自定义模板", async () => {
+		mockAxios.post.mockResolvedValueOnce({ data: { url: "dummy.url" } });
+		const wrapper = mount(Uploader, {
+			props: {
+				action: "test.url"
+			},
+			slots: {
+				default: "<button>Custom button</button>",
+				loading: "<button class='loading'>Custom loading</button>",
+				uploaded: `<template #uploaded='{ uploadedData }'>
+					<div class='custom-loaded'>{{ uploadedData.url }}</div>
+				</template>`
+			},
+			global: {
+				stubs: mockComponents
+			}
+		});
+		expect(wrapper.get("button").text()).toBe("Custom button");
+		const fileInput = wrapper.get("input").element as HTMLInputElement;
+		setInputValue(fileInput);
+		await wrapper.get("input").trigger("change");
+		expect(wrapper.get(".loading").text()).toBe("Custom loading");
+		await flushPromises();
+		expect(wrapper.get(".custom-loaded").text()).toBe("dummy.url");
+	});
 
 	afterEach(() => {});
 });

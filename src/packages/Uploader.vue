@@ -1,13 +1,20 @@
 <template>
 	<div class="upload-component">
-		<button
-			class="upload-button"
-			@click="triggerUpload"
-			:disabled="isUploading"
-		>
-			<span v-if="isUploading">正在上传</span>
-			<span v-else>点击上传</span>
-		</button>
+		<div class="upload-area" @click="triggerUpload" :disabled="isUploading">
+			<slot v-if="isUploading" name="loading">
+				<button disable>正在上传</button>
+			</slot>
+			<slot
+				v-else-if="lastUploadFile && lastUploadFile.loaded"
+				name="uploaded"
+				:uploadedData="lastUploadFile.data"
+			>
+				<button>点击上传</button>
+			</slot>
+			<slot v-else name="default">
+				<button>点击上传</button>
+			</slot>
+		</div>
 		<input
 			class="input-control"
 			ref="inputRef"
@@ -43,6 +50,7 @@ import {
 } from "@ant-design/icons-vue";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import { last } from "lodash-es";
 
 type UploadStatus = "read" | "loading" | "success" | "error";
 export interface UploadFile {
@@ -51,6 +59,8 @@ export interface UploadFile {
 	size: number;
 	raw: File;
 	status: UploadStatus;
+	uploaded?: boolean;
+	resp?: any;
 }
 
 export default defineComponent({
@@ -63,8 +73,19 @@ export default defineComponent({
 	setup(props) {
 		const inputRef = ref<HTMLInputElement | null>(null);
 		const uploadFiles = ref<UploadFile[]>([]);
-		const isUploading = computed(() => {
-			return uploadFiles.value.some((file) => file.status === "loading");
+		const isUploading = computed(() =>
+			uploadFiles.value.some((file) => file.status === "loading")
+		);
+		const lastUploadFile = computed(() => {
+			const lastFile = last(uploadFiles.value);
+			if (lastFile) {
+				return {
+					loaded: lastFile.status === "success",
+					data: lastFile.resp
+				};
+			} else {
+				return false;
+			}
 		});
 
 		/** trigger input 事件*/
@@ -87,7 +108,8 @@ export default defineComponent({
 					name: uploadFile.name,
 					size: uploadFile.size,
 					raw: uploadFile,
-					status: "loading"
+					status: "loading",
+					uploaded: false
 				});
 				uploadFiles.value.push(uploadObj);
 
@@ -99,6 +121,8 @@ export default defineComponent({
 					})
 					.then((resp) => {
 						uploadObj.status = "success";
+						uploadObj.uploaded = true;
+						uploadObj.resp = resp.data;
 					})
 					.catch((err) => {
 						uploadObj.status = "error";
@@ -122,13 +146,9 @@ export default defineComponent({
 			handleUpload,
 			isUploading,
 			uploadFiles,
-			handleDelete
+			handleDelete,
+			lastUploadFile
 		};
-	},
-	components: {
-		LoadingOutlined,
-		DeleteOutlined,
-		FileOutlined
 	}
 });
 </script>
